@@ -1,5 +1,5 @@
 /*!
- * bespoke-keys v0.0.0
+ * bespoke-keys v0.1.0
  * https://github.com/markdalgleish/bespoke-keys
  *
  * Copyright 2013, Mark Dalgleish
