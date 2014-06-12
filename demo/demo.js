@@ -1,3 +1,3 @@
-bespoke.from('article', {
-  keys: true
-});
+bespoke.from('article', [
+  bespoke.plugins.keys()
+]);

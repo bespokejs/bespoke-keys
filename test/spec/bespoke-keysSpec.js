@@ -3,15 +3,21 @@
 
   describe("bespoke-keys", function() {
 
+    Function.prototype.bind = Function.prototype.bind || require('function-bind');
+    require('simulant/simulant');
+
+    var bespoke = require('bespoke'),
+      keys = require('../../lib-instrumented/bespoke-keys.js');
+
     var deck,
 
       createDeck = function(optionValue) {
         var parent = document.createElement('article');
         parent.innerHTML = '<section></section><section></section>';
 
-        deck = bespoke.from(parent, {
-          keys: optionValue
-        });
+        deck = bespoke.from(parent, [
+          keys(optionValue)
+        ]);
       },
 
       pressKey = function(which) {
@@ -20,7 +26,7 @@
 
     describe("horizontal deck", function() {
 
-      [true, 'horizontal'].forEach(function (optionValue) {
+      [undefined, 'horizontal'].forEach(function (optionValue) {
 
         describe("with an option value of '" + optionValue + "'", function() {
 
@@ -30,17 +36,17 @@
 
             it("should go to the next slide when pressing the space bar", function() {
               pressKey(32);
-              expect(deck.slides[1].classList.contains('bespoke-active')).toBe(true);
+              expect(deck.slide()).toBe(1);
             });
 
             it("should go to the next slide when pressing the right arrow", function() {
               pressKey(39);
-              expect(deck.slides[1].classList.contains('bespoke-active')).toBe(true);
+              expect(deck.slide()).toBe(1);
             });
 
             it("should go to the next slide when pressing page down", function() {
               pressKey(34);
-              expect(deck.slides[1].classList.contains('bespoke-active')).toBe(true);
+              expect(deck.slide()).toBe(1);
             });
 
           });
@@ -53,12 +59,12 @@
 
             it("should go to the previous slide when pressing the left arrow", function() {
               pressKey(37);
-              expect(deck.slides[0].classList.contains('bespoke-active')).toBe(true);
+              expect(deck.slide()).toBe(0);
             });
 
             it("should go to the previous slide when pressing page up", function() {
               pressKey(33);
-              expect(deck.slides[0].classList.contains('bespoke-active')).toBe(true);
+              expect(deck.slide()).toBe(0);
             });
 
           });
@@ -77,17 +83,17 @@
 
         it("should go to the next slide when pressing the space bar", function() {
           pressKey(32);
-          expect(deck.slides[1].classList.contains('bespoke-active')).toBe(true);
+          expect(deck.slide()).toBe(1);
         });
 
         it("should go to the next slide when pressing the down arrow", function() {
           pressKey(40);
-          expect(deck.slides[1].classList.contains('bespoke-active')).toBe(true);
+          expect(deck.slide()).toBe(1);
         });
 
         it("should go to the next slide when pressing page down", function() {
           pressKey(34);
-          expect(deck.slides[1].classList.contains('bespoke-active')).toBe(true);
+          expect(deck.slide()).toBe(1);
         });
 
       });
@@ -100,12 +106,12 @@
 
         it("should go to the previous slide when pressing the up arrow", function() {
           pressKey(38);
-          expect(deck.slides[0].classList.contains('bespoke-active')).toBe(true);
+          expect(deck.slide()).toBe(0);
         });
 
         it("should go to the previous slide when pressing page up", function() {
           pressKey(33);
-          expect(deck.slides[0].classList.contains('bespoke-active')).toBe(true);
+          expect(deck.slide()).toBe(0);
         });
 
       });
