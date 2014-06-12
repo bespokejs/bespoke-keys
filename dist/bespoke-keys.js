@@ -1,5 +1,5 @@
 /*!
- * bespoke-keys v1.0.0-beta
+ * bespoke-keys v1.0.0-beta.2
  *
  * Copyright 2014, Mark Dalgleish
  * This content is released under the MIT license
