@@ -19,7 +19,7 @@ For example, when using CommonJS modules:
 
 ```js
 var bespoke = require('bespoke'),
-  keys = require('keys');
+  keys = require('bespoke-keys');
 
 bespoke.from('article', [
   keys()
