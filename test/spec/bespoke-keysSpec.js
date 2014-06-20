@@ -1,117 +1,69 @@
-(function() {
-  'use strict';
+describe("bespoke-keys", function() {
 
-  describe("bespoke-keys", function() {
+  Function.prototype.bind = Function.prototype.bind || require('function-bind');
+  require('simulant/simulant');
 
-    Function.prototype.bind = Function.prototype.bind || require('function-bind');
-    require('simulant/simulant');
+  var bespoke = require('bespoke'),
+    keys = require('../../lib-instrumented/bespoke-keys.js');
 
-    var bespoke = require('bespoke'),
-      keys = require('../../lib-instrumented/bespoke-keys.js');
+  var deck,
 
-    var deck,
+    createDeck = function(optionValue) {
+      var parent = document.createElement('article');
+      parent.innerHTML = '<section></section><section></section>';
 
-      createDeck = function(optionValue) {
-        var parent = document.createElement('article');
-        parent.innerHTML = '<section></section><section></section>';
+      deck = bespoke.from(parent, [
+        keys(optionValue)
+      ]);
+    },
 
-        deck = bespoke.from(parent, [
-          keys(optionValue)
-        ]);
-      },
+    pressKey = function(which) {
+      simulant.fire(document, 'keydown', { which: which });
+    };
 
-      pressKey = function(which) {
-        simulant.fire(document, 'keydown', { which: which });
-      };
+  describe("horizontal deck", function() {
 
-    describe("horizontal deck", function() {
+    [undefined, 'horizontal'].forEach(function (optionValue) {
 
-      [undefined, 'horizontal'].forEach(function (optionValue) {
+      describe("with an option value of '" + optionValue + "'", function() {
 
-        describe("with an option value of '" + optionValue + "'", function() {
+        beforeEach(createDeck.bind(null, optionValue));
 
-          beforeEach(createDeck.bind(null, optionValue));
+        describe("next slide", function() {
 
-          describe("next slide", function() {
-
-            it("should go to the next slide when pressing the space bar", function() {
-              pressKey(32);
-              expect(deck.slide()).toBe(1);
-            });
-
-            it("should go to the next slide when pressing the right arrow", function() {
-              pressKey(39);
-              expect(deck.slide()).toBe(1);
-            });
-
-            it("should go to the next slide when pressing page down", function() {
-              pressKey(34);
-              expect(deck.slide()).toBe(1);
-            });
-
+          it("should go to the next slide when pressing the space bar", function() {
+            pressKey(32);
+            expect(deck.slide()).toBe(1);
           });
 
-          describe("previous slide", function() {
+          it("should go to the next slide when pressing the right arrow", function() {
+            pressKey(39);
+            expect(deck.slide()).toBe(1);
+          });
 
-            beforeEach(function() {
-              deck.slide(1);
-            });
-
-            it("should go to the previous slide when pressing the left arrow", function() {
-              pressKey(37);
-              expect(deck.slide()).toBe(0);
-            });
-
-            it("should go to the previous slide when pressing page up", function() {
-              pressKey(33);
-              expect(deck.slide()).toBe(0);
-            });
-
+          it("should go to the next slide when pressing page down", function() {
+            pressKey(34);
+            expect(deck.slide()).toBe(1);
           });
 
         });
 
-      });
+        describe("previous slide", function() {
 
-    });
+          beforeEach(function() {
+            deck.slide(1);
+          });
 
-    describe("vertical deck", function() {
+          it("should go to the previous slide when pressing the left arrow", function() {
+            pressKey(37);
+            expect(deck.slide()).toBe(0);
+          });
 
-      beforeEach(createDeck.bind(null, 'vertical'));
+          it("should go to the previous slide when pressing page up", function() {
+            pressKey(33);
+            expect(deck.slide()).toBe(0);
+          });
 
-      describe("next slide", function() {
-
-        it("should go to the next slide when pressing the space bar", function() {
-          pressKey(32);
-          expect(deck.slide()).toBe(1);
-        });
-
-        it("should go to the next slide when pressing the down arrow", function() {
-          pressKey(40);
-          expect(deck.slide()).toBe(1);
-        });
-
-        it("should go to the next slide when pressing page down", function() {
-          pressKey(34);
-          expect(deck.slide()).toBe(1);
-        });
-
-      });
-
-      describe("previous slide", function() {
-
-        beforeEach(function() {
-          deck.slide(1);
-        });
-
-        it("should go to the previous slide when pressing the up arrow", function() {
-          pressKey(38);
-          expect(deck.slide()).toBe(0);
-        });
-
-        it("should go to the previous slide when pressing page up", function() {
-          pressKey(33);
-          expect(deck.slide()).toBe(0);
         });
 
       });
@@ -120,4 +72,47 @@
 
   });
 
-}());
+  describe("vertical deck", function() {
+
+    beforeEach(createDeck.bind(null, 'vertical'));
+
+    describe("next slide", function() {
+
+      it("should go to the next slide when pressing the space bar", function() {
+        pressKey(32);
+        expect(deck.slide()).toBe(1);
+      });
+
+      it("should go to the next slide when pressing the down arrow", function() {
+        pressKey(40);
+        expect(deck.slide()).toBe(1);
+      });
+
+      it("should go to the next slide when pressing page down", function() {
+        pressKey(34);
+        expect(deck.slide()).toBe(1);
+      });
+
+    });
+
+    describe("previous slide", function() {
+
+      beforeEach(function() {
+        deck.slide(1);
+      });
+
+      it("should go to the previous slide when pressing the up arrow", function() {
+        pressKey(38);
+        expect(deck.slide()).toBe(0);
+      });
+
+      it("should go to the previous slide when pressing page up", function() {
+        pressKey(33);
+        expect(deck.slide()).toBe(0);
+      });
+
+    });
+
+  });
+
+});
