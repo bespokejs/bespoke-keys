@@ -1,6 +1,6 @@
 {
   "name": "bespoke-keys",
-  "version": "1.0.0-beta.2",
+  "version": "1.0.0",
   "description": "Keyboard Support for Bespoke.js",
   "homepage": "https://github.com/markdalgleish/bespoke-keys",
   "bugs": "https://github.com/markdalgleish/bespoke-keys/issues",

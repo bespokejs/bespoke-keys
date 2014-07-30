@@ -1,6 +1,6 @@
 {
   "name": "bespoke-keys",
-  "version": "1.0.0-beta.2",
+  "version": "1.0.0",
   "main": "./dist/bespoke-keys.js",
   "dependencies": {
     "bespoke.js": "^1.0.0-beta"
