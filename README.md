@@ -34,7 +34,7 @@ bespoke.from('article', [
 }];
 ```
 
-By default, bespoke-keys uses the spacebar, left/right and page up/down keys to navigate the slides.
+By default, bespoke-keys uses the spacebar/shift+spacebar, left/right and page up/down keys to navigate the slides.
 
 If your presentation is laid out vertically, you can allow navigation with up/down instead of left/right with the `vertical` option:
 

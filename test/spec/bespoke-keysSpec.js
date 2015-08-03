@@ -17,8 +17,8 @@ describe("bespoke-keys", function() {
       ]);
     },
 
-    pressKey = function(which) {
-      simulant.fire(document, 'keydown', { which: which });
+    pressKey = function(which, isShift) {
+      simulant.fire(document, 'keydown', { which: which, shiftKey: !!isShift });
     };
 
   describe("horizontal deck", function() {
@@ -61,6 +61,11 @@ describe("bespoke-keys", function() {
 
           it("should go to the previous slide when pressing page up", function() {
             pressKey(33);
+            expect(deck.slide()).toBe(0);
+          });
+
+          it("should go to the previous slide when pressing the shift and space bar", function() {
+            pressKey(32, true);
             expect(deck.slide()).toBe(0);
           });
 
@@ -108,6 +113,11 @@ describe("bespoke-keys", function() {
 
       it("should go to the previous slide when pressing page up", function() {
         pressKey(33);
+        expect(deck.slide()).toBe(0);
+      });
+
+      it("should go to the previous slide when pressing the shift and space bar", function() {
+        pressKey(32, true);
         expect(deck.slide()).toBe(0);
       });
 
