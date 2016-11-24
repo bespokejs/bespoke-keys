@@ -23,7 +23,7 @@ var bespoke = require('bespoke'),
 
 bespoke.from('article', [
   keys()
-}];
+]);
 ```
 
 When using browser globals:
@@ -31,7 +31,7 @@ When using browser globals:
 ```js
 bespoke.from('article', [
   bespoke.plugins.keys()
-}];
+]);
 ```
 
 By default, bespoke-keys uses the spacebar/shift+spacebar, left/right and page up/down keys to navigate the slides.
